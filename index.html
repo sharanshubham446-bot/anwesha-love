@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Anwesha ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family: "Georgia", serif;
+background:black;
+color:white;
+overflow:hidden;
+text-align:center;
+}
+
+/* cinematic intro */
+
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:5;
+}
+
+#intro h1{
+font-size:40px;
+letter-spacing:3px;
+animation:fade 4s infinite alternate;
+}
+
+@keyframes fade{
+from{opacity:0.3}
+to{opacity:1}
+}
+
+#enter{
+padding:16px 30px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff2e63;
+color:white;
+cursor:pointer;
+}
+
+/* main */
+
+#main{
+display:none;
+padding-top:25vh;
+}
+
+h2{
+font-size:36px;
+}
+
+button{
+padding:14px 26px;
+font-size:18px;
+border:none;
+border-radius:25px;
+margin:12px;
+cursor:pointer;
+}
+
+#yes{
+background:#ff2e63;
+color:white;
+}
+
+#no{
+background:#333;
+color:white;
+position:absolute;
+}
+
+/* typing text */
+
+#message{
+display:none;
+max-width:720px;
+margin:auto;
+font-size:18px;
+line-height:1.8;
+padding:20px;
+}
+
+/* floating hearts */
+
+.heart{
+position:absolute;
+font-size:24px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:1}
+100%{transform:translateY(-10vh);opacity:0}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9bce9c.mp3">
+</audio>
+
+<canvas id="sky"></canvas>
+
+<div id="intro">
+
+<h1>A story written in the stars</h1>
+<p>For Anwesha ❤️</p>
+
+<button id="enter">Begin the Story</button>
+
+</div>
+
+<div id="main">
+
+<h2 id="question">Anwesha, will you be mine forever? ❤️</h2>
+
+<button id="yes">Yes</button>
+<button id="no">No</button>
+
+<div id="message"></div>
+
+</div>
+
+<script>
+
+/* intro */
+
+document.getElementById("enter").onclick=function(){
+
+document.getElementById("intro").style.display="none"
+document.getElementById("main").style.display="block"
+
+document.getElementById("music").play()
+
+}
+
+/* floating hearts */
+
+function heart(){
+
+let h=document.createElement("div")
+h.className="heart"
+h.innerHTML="❤️"
+
+h.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(h)
+
+setTimeout(()=>h.remove(),6000)
+
+}
+
+setInterval(heart,400)
+
+/* starfield */
+
+const canvas=document.getElementById("sky")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<250;i++){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2
+})
+
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+stars.forEach(s=>{
+
+ctx.fillStyle="white"
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+ctx.fill()
+
+})
+
+requestAnimationFrame(drawStars)
+
+}
+
+drawStars()
+
+/* runaway button */
+
+const noBtn=document.getElementById("no")
+
+noBtn.addEventListener("mouseover",()=>{
+
+const x=Math.random()*(window.innerWidth-100)
+const y=Math.random()*(window.innerHeight-100)
+
+noBtn.style.left=x+"px"
+noBtn.style.top=y+"px"
+
+})
+
+/* typing love letter */
+
+const text=`3rd June 2025… the day our story quietly began.
+
+For me it felt like the first page of a book that changed my life forever.
+
+Our journey hasn't always been perfect.
+We've had laughter, misunderstandings, distance and beautiful memories.
+
+But through every moment,
+my heart somehow kept finding its way back to you.
+
+What we have isn't a fairytale.
+
+It's real.
+It's honest.
+And that's why it means everything to me.
+
+You became a thought my mind returns to,
+a name my heart remembers even in silence.
+
+And no matter where life takes us,
+you will always hold a piece of my heart.
+
+❤️`
+
+let i=0
+
+function typeWriter(){
+
+if(i<text.length){
+
+document.getElementById("message").innerHTML+=text.charAt(i)
+i++
+
+setTimeout(typeWriter,40)
+
+}
+
+}
+
+/* yes button */
+
+document.getElementById("yes").onclick=function(){
+
+document.getElementById("yes").style.display="none"
+document.getElementById("no").style.display="none"
+document.getElementById("question").style.display="none"
+
+document.getElementById("message").style.display="block"
+
+typeWriter()
+
+fireworks()
+
+}
+
+/* fireworks text */
+
+function fireworks(){
+
+setInterval(()=>{
+
+ctx.fillStyle="rgba(0,0,0,0.2)"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="pink"
+ctx.font="70px Georgia"
+
+ctx.fillText("Anwesha ❤️",canvas.width/2-170,canvas.height/2)
+
+},500)
+
+}
+
+</script>
+
+</body>
+</html>
